@@ -6,19 +6,19 @@
     <title>AI Prompting & Architecture 2026: Technical Master Study Suite</title>
     <style>
         :root {
-            --bg-primary: #121019;
-            --bg-card: #1c1827;
-            --bg-card-hover: #2a243a;
-            --violet-main: #a855f7;
-            --violet-glow: #c084fc;
-            --violet-light: #e9d5ff;
-            --ash-grey: #94a3b8;
-            --ash-light: #cbd5e1;
-            --ash-dark: #334155;
-            --text-main: #f8fafc;
-            --border-color: #3b334d;
-            --success-color: #34d399;
-            --error-color: #f87171;
+            --bg-primary: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-card-hover: #f1f5f9;
+            --violet-main: #7c3aed;
+            --violet-glow: #6d28d9;
+            --violet-light: #5b21b6;
+            --ash-grey: #64748b;
+            --ash-light: #475569;
+            --ash-dark: #cbd5e1;
+            --text-main: #0f172a;
+            --border-color: #cbd5e1;
+            --success-color: #059669;
+            --error-color: #dc2626;
         }
 
         * {
@@ -48,20 +48,20 @@
         }
 
         h1 {
-            color: var(--violet-glow);
+            color: var(--violet-main);
             font-size: 2.5rem;
             margin-bottom: 0.5rem;
-            text-shadow: 0 0 12px rgba(168, 85, 247, 0.4);
+            text-shadow: 0 0 12px rgba(124, 58, 237, 0.15);
         }
 
         .subtitle {
-            color: var(--ash-light);
+            color: var(--ash-grey);
             font-size: 1.15rem;
             font-weight: 500;
         }
 
         .section-title {
-            color: var(--violet-glow);
+            color: var(--violet-main);
             font-size: 1.8rem;
             margin: 2.5rem 0 1.5rem 0;
             border-left: 4px solid var(--violet-main);
@@ -85,13 +85,14 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         }
 
         .card:hover {
             transform: translateY(-5px);
             background: var(--bg-card-hover);
             border-color: var(--violet-main);
-            box-shadow: 0 8px 20px rgba(168, 85, 247, 0.2);
+            box-shadow: 0 8px 20px rgba(124, 58, 237, 0.15);
         }
 
         .card-number {
@@ -103,7 +104,7 @@
         }
 
         .card-title {
-            color: var(--violet-glow);
+            color: var(--violet-main);
             font-size: 1.2rem;
             margin-bottom: 0.75rem;
         }
@@ -117,7 +118,7 @@
         .card-btn {
             align-self: flex-start;
             background: transparent;
-            color: var(--violet-light);
+            color: var(--violet-main);
             border: 1px solid var(--violet-main);
             padding: 0.4rem 0.8rem;
             border-radius: 6px;
@@ -128,7 +129,7 @@
 
         .card:hover .card-btn {
             background: var(--violet-main);
-            color: var(--bg-primary);
+            color: #ffffff;
         }
 
         /* Modal / Pop-up Styling */
@@ -138,8 +139,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(18, 16, 25, 0.88);
-            backdrop-filter: blur(6px);
+            background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(4px);
             display: none;
             justify-content: center;
             align-items: center;
@@ -157,7 +158,7 @@
             overflow-y: auto;
             padding: 2rem;
             position: relative;
-            box-shadow: 0 0 30px rgba(168, 85, 247, 0.25);
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.2);
         }
 
         .modal-close {
@@ -171,11 +172,11 @@
         }
 
         .modal-close:hover {
-            color: var(--violet-light);
+            color: var(--violet-main);
         }
 
         .modal-title {
-            color: var(--violet-glow);
+            color: var(--violet-main);
             font-size: 1.75rem;
             margin-bottom: 1rem;
             padding-right: 2rem;
@@ -210,12 +211,12 @@
         }
 
         .modal-body th {
-            background: var(--bg-primary);
-            color: var(--violet-glow);
+            background: #f1f5f9;
+            color: var(--violet-main);
         }
 
         .modal-body code {
-            background: var(--bg-primary);
+            background: #f1f5f9;
             color: var(--violet-light);
             padding: 0.2rem 0.4rem;
             border-radius: 4px;
@@ -223,7 +224,7 @@
         }
 
         .modal-body pre {
-            background: var(--bg-primary);
+            background: #f1f5f9;
             padding: 1rem;
             border-radius: 8px;
             overflow-x: auto;
@@ -238,10 +239,11 @@
             border-radius: 16px;
             padding: 2rem;
             margin-top: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         }
 
         .quiz-question {
-            background: rgba(18, 16, 25, 0.6);
+            background: #f8fafc;
             border: 1px solid var(--border-color);
             border-radius: 8px;
             padding: 1.25rem;
@@ -249,7 +251,7 @@
         }
 
         .q-title {
-            color: var(--violet-glow);
+            color: var(--violet-main);
             font-weight: 600;
             font-size: 1.1rem;
             margin-bottom: 1rem;
@@ -266,7 +268,7 @@
             align-items: center;
             gap: 0.75rem;
             padding: 0.6rem 1rem;
-            background: var(--bg-card);
+            background: #ffffff;
             border: 1px solid var(--border-color);
             border-radius: 6px;
             cursor: pointer;
@@ -286,7 +288,7 @@
 
         .submit-btn {
             background: linear-gradient(135deg, var(--violet-main), var(--ash-grey));
-            color: var(--bg-primary);
+            color: #ffffff;
             font-size: 1.2rem;
             font-weight: bold;
             border: none;
@@ -319,7 +321,7 @@
 
         .score-text {
             font-size: 2.2rem;
-            color: var(--violet-glow);
+            color: var(--violet-main);
             font-weight: bold;
         }
 
@@ -333,8 +335,8 @@
         .glitch-star {
             font-size: 5rem;
             display: inline-block;
-            color: #fff;
-            text-shadow: 0 0 10px #fff, 0 0 20px var(--violet-main), 0 0 30px var(--violet-glow), 0 0 40px var(--violet-glow);
+            color: #7c3aed;
+            text-shadow: 0 0 10px rgba(124,58,237,0.5), 0 0 20px var(--violet-main), 0 0 30px #c084fc;
             animation: pulse 1.5s infinite alternate, glitch 0.3s infinite;
         }
 
@@ -357,19 +359,20 @@
         }
 
         .key-item {
-            background: var(--bg-primary);
+            background: #f8fafc;
             border-radius: 8px;
             padding: 1rem;
             margin-bottom: 1rem;
             border-left: 4px solid var(--border-color);
+            border: 1px solid var(--border-color);
         }
 
         .key-item.correct {
-            border-left-color: var(--success-color);
+            border-left: 4px solid var(--success-color);
         }
 
         .key-item.incorrect {
-            border-left-color: var(--error-color);
+            border-left: 4px solid var(--error-color);
         }
 
         .key-q {
@@ -394,7 +397,7 @@
         }
 
         .diagram-box {
-            background: var(--bg-primary);
+            background: #f1f5f9;
             border: 1px solid var(--border-color);
             border-radius: 8px;
             padding: 1rem;
@@ -413,7 +416,7 @@
 <div class="container">
     <header>
         <h1>AI Prompting & Architecture 2026</h1>
-        <div class="subtitle">Violet & Ash Grey Technical Study Suite</div>
+        <div class="subtitle">Silver-White & Violet Technical Study Suite (Press ESC to close pop-ups)</div>
     </header>
 
     <!-- CORE CONCEPTS POPUP CARDS SECTION -->
@@ -438,7 +441,7 @@
                 <div class="score-text" id="score-display">0 / 30</div>
                 <div class="star-container" id="star-box">
                     <div class="glitch-star">★</div>
-                    <div style="color: var(--violet-glow); font-weight: bold; margin-top: 0.5rem;">EXCELLENCE ACHIEVED: SCORE 24 OR ABOVE!</div>
+                    <div style="color: var(--violet-main); font-weight: bold; margin-top: 0.5rem;">EXCELLENCE ACHIEVED: SCORE 24 OR ABOVE!</div>
                 </div>
             </div>
             <div class="answer-key" id="answer-key-container">
@@ -451,7 +454,7 @@
 <!-- POP-UP MODAL OVERLAY -->
 <div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
     <div class="modal-content" onclick="event.stopPropagation()">
-        <span class="modal-close" onclick="closeModal(force=true)">&times;</span>
+        <span class="modal-close" onclick="closeModal(null, true)">&times;</span>
         <h2 class="modal-title" id="modal-title"></h2>
         <div class="modal-body" id="modal-body"></div>
     </div>
@@ -475,16 +478,16 @@ const conceptsData = [
             </ul>
             <div class="diagram-box">
                 <svg width="600" height="120" viewBox="0 0 600 120">
-                    <rect x="10" y="30" width="120" height="60" rx="8" fill="#1c1827" stroke="#a855f7" stroke-width="2"/>
-                    <text x="70" y="65" fill="#f8fafc" text-anchor="middle" font-size="12">Novice Prompt</text>
-                    <text x="70" y="80" fill="#94a3b8" text-anchor="middle" font-size="10">(Ask Only)</text>
+                    <rect x="10" y="30" width="120" height="60" rx="8" fill="#ffffff" stroke="#7c3aed" stroke-width="2"/>
+                    <text x="70" y="65" fill="#0f172a" text-anchor="middle" font-size="12">Novice Prompt</text>
+                    <text x="70" y="80" fill="#64748b" text-anchor="middle" font-size="10">(Ask Only)</text>
 
                     <path d="M 140 60 L 190 60" stroke="#cbd5e1" stroke-width="2"/>
 
-                    <rect x="200" y="10" width="380" height="100" rx="8" fill="#1c1827" stroke="#cbd5e1" stroke-width="2"/>
-                    <text x="390" y="35" fill="#c084fc" text-anchor="middle" font-weight="bold" font-size="13">Power User Briefing</text>
-                    <text x="390" y="60" fill="#f8fafc" text-anchor="middle" font-size="11">Files + Context + Constraints + Specific Ask</text>
-                    <text x="390" y="85" fill="#34d399" text-anchor="middle" font-size="10">Zero assumptions, strict schemas, verifiable outputs</text>
+                    <rect x="200" y="10" width="380" height="100" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+                    <text x="390" y="35" fill="#7c3aed" text-anchor="middle" font-weight="bold" font-size="13">Power User Briefing</text>
+                    <text x="390" y="60" fill="#0f172a" text-anchor="middle" font-size="11">Files + Context + Constraints + Specific Ask</text>
+                    <text x="390" y="85" fill="#059669" text-anchor="middle" font-size="10">Zero assumptions, strict schemas, verifiable outputs</text>
                 </svg>
             </div>
         `
@@ -1025,6 +1028,13 @@ const quizQuestions = [
 document.addEventListener('DOMContentLoaded', () => {
     renderCards();
     renderQuiz();
+});
+
+// ESC Key Listener Feature to Close Pop-up Cards / Modals
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+        closeModal(null, true);
+    }
 });
 
 // Render Concept Cards
