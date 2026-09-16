@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Prompting & Architecture 2026: Technical Master Study Suite</title>
+    <style>
+        :root {
+            --bg-primary: #121019;
+            --bg-card: #1c1827;
+            --bg-card-hover: #2a243a;
+            --violet-main: #a855f7;
+            --violet-glow: #c084fc;
+            --violet-light: #e9d5ff;
+            --ash-grey: #94a3b8;
+            --ash-light: #cbd5e1;
+            --ash-dark: #334155;
+            --text-main: #f8fafc;
+            --border-color: #3b334d;
+            --success-color: #34d399;
+            --error-color: #f87171;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        h1 {
+            color: var(--violet-glow);
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 12px rgba(168, 85, 247, 0.4);
+        }
+
+        .subtitle {
+            color: var(--ash-light);
+            font-size: 1.15rem;
+            font-weight: 500;
+        }
+
+        .section-title {
+            color: var(--violet-glow);
+            font-size: 1.8rem;
+            margin: 2.5rem 0 1.5rem 0;
+            border-left: 4px solid var(--violet-main);
+            padding-left: 0.75rem;
+        }
+
+        /* Grid Layouts */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            background: var(--bg-card-hover);
+            border-color: var(--violet-main);
+            box-shadow: 0 8px 20px rgba(168, 85, 247, 0.2);
+        }
+
+        .card-number {
+            color: var(--violet-light);
+            font-weight: bold;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.05em;
+        }
+
+        .card-title {
+            color: var(--violet-glow);
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .card-preview {
+            color: var(--ash-grey);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-btn {
+            align-self: flex-start;
+            background: transparent;
+            color: var(--violet-light);
+            border: 1px solid var(--violet-main);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .card:hover .card-btn {
+            background: var(--violet-main);
+            color: var(--bg-primary);
+        }
+
+        /* Modal / Pop-up Styling */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(18, 16, 25, 0.88);
+            backdrop-filter: blur(6px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 1rem;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            border: 1px solid var(--violet-main);
+            border-radius: 16px;
+            max-width: 820px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 2rem;
+            position: relative;
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.25);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            color: var(--ash-grey);
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            color: var(--violet-light);
+        }
+
+        .modal-title {
+            color: var(--violet-glow);
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            padding-right: 2rem;
+        }
+
+        .modal-body {
+            color: var(--text-main);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        .modal-body ul, .modal-body ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .modal-body li {
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+
+        .modal-body th, .modal-body td {
+            border: 1px solid var(--border-color);
+            padding: 0.75rem;
+            text-align: left;
+        }
+
+        .modal-body th {
+            background: var(--bg-primary);
+            color: var(--violet-glow);
+        }
+
+        .modal-body code {
+            background: var(--bg-primary);
+            color: var(--violet-light);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+
+        .modal-body pre {
+            background: var(--bg-primary);
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Quiz Styling */
+        .quiz-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .quiz-question {
+            background: rgba(18, 16, 25, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .q-title {
+            color: var(--violet-glow);
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .q-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.6rem 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option-label:hover {
+            border-color: var(--violet-main);
+            background: var(--bg-card-hover);
+        }
+
+        .option-label input[type="radio"] {
+            accent-color: var(--violet-main);
+            width: 18px;
+            height: 18px;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--violet-main), var(--ash-grey));
+            color: var(--bg-primary);
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 1rem;
+            transition: opacity 0.2s;
+        }
+
+        .submit-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* Results Display */
+        #quiz-results {
+            display: none;
+            margin-top: 2rem;
+            padding: 2rem;
+            background: var(--bg-card);
+            border-radius: 16px;
+            border: 2px solid var(--violet-main);
+        }
+
+        .score-banner {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .score-text {
+            font-size: 2.2rem;
+            color: var(--violet-glow);
+            font-weight: bold;
+        }
+
+        /* Glitching Shining Star Animation */
+        .star-container {
+            display: none;
+            text-align: center;
+            margin: 1.5rem 0;
+        }
+
+        .glitch-star {
+            font-size: 5rem;
+            display: inline-block;
+            color: #fff;
+            text-shadow: 0 0 10px #fff, 0 0 20px var(--violet-main), 0 0 30px var(--violet-glow), 0 0 40px var(--violet-glow);
+            animation: pulse 1.5s infinite alternate, glitch 0.3s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.15); }
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(0) scale(1.1); filter: hue-rotate(0deg); }
+            20% { transform: translate(-3px, 3px) scale(1.15); }
+            40% { transform: translate(-3px, -3px) scale(1.08); filter: hue-rotate(90deg); }
+            60% { transform: translate(3px, 3px) scale(1.12); }
+            80% { transform: translate(3px, -3px) scale(1.1); filter: hue-rotate(180deg); }
+            100% { transform: translate(0) scale(1.15); filter: hue-rotate(360deg); }
+        }
+
+        .answer-key {
+            margin-top: 2rem;
+        }
+
+        .key-item {
+            background: var(--bg-primary);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--border-color);
+        }
+
+        .key-item.correct {
+            border-left-color: var(--success-color);
+        }
+
+        .key-item.incorrect {
+            border-left-color: var(--error-color);
+        }
+
+        .key-q {
+            font-weight: bold;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+        }
+
+        .key-status {
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .key-status.correct { color: var(--success-color); }
+        .key-status.incorrect { color: var(--error-color); }
+
+        .key-explanation {
+            font-size: 0.95rem;
+            color: var(--ash-grey);
+            margin-top: 0.5rem;
+        }
+
+        .diagram-box {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            text-align: center;
+        }
+
+        .diagram-box svg {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>AI Prompting & Architecture 2026</h1>
+        <div class="subtitle">Violet & Ash Grey Technical Study Suite</div>
+    </header>
+
+    <!-- CORE CONCEPTS POPUP CARDS SECTION -->
+    <h2 class="section-title">Core Technical Concepts (Interactive Briefings)</h2>
+    <div class="cards-grid" id="cards-container">
+        <!-- Cards injected dynamically via JavaScript -->
+    </div>
+
+    <!-- ADVANCED QUIZ SECTION -->
+    <h2 class="section-title">Advanced Technical Assessment (30 Questions)</h2>
+    <div class="quiz-container">
+        <form id="quiz-form">
+            <div id="quiz-questions-container">
+                <!-- Quiz questions injected dynamically via JavaScript -->
+            </div>
+            <button type="button" class="submit-btn" onclick="evaluateQuiz()">Submit Assessment & Calculate Score</button>
+        </form>
+
+        <div id="quiz-results">
+            <div class="score-banner">
+                <div>Assessment Results</div>
+                <div class="score-text" id="score-display">0 / 30</div>
+                <div class="star-container" id="star-box">
+                    <div class="glitch-star">★</div>
+                    <div style="color: var(--violet-glow); font-weight: bold; margin-top: 0.5rem;">EXCELLENCE ACHIEVED: SCORE 24 OR ABOVE!</div>
+                </div>
+            </div>
+            <div class="answer-key" id="answer-key-container">
+                <!-- Answer key injected dynamically -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- POP-UP MODAL OVERLAY -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <span class="modal-close" onclick="closeModal(force=true)">&times;</span>
+        <h2 class="modal-title" id="modal-title"></h2>
+        <div class="modal-body" id="modal-body"></div>
+    </div>
+</div>
+
+<script>
+// --- CORE CONCEPTS EXTRACTED FROM MATERIAL ---
+const conceptsData = [
+    {
+        id: 1,
+        title: "Novice vs. Power User Briefings",
+        preview: "Shift from short trivia queries to structural briefing specifications.",
+        content: `
+            <p><strong>Core Technical Shift:</strong> Power users do not write single isolated prompts; they brief an AI model as a stateless, highly capable colleague.</p>
+            <p>A full technical briefing consists of 4 vital structural components:</p>
+            <ul>
+                <li><strong>Files/Data:</strong> Raw spreadsheets, documents, logs, or codebase attachments.</li>
+                <li><strong>Goal:</strong> High-level intended outcome or state change.</li>
+                <li><strong>Limits/Constraints:</strong> Architectural, legal, financial, or operational boundaries.</li>
+                <li><strong>Exact Ask:</strong> Precise output schema, file format, or structural deliverable.</li>
+            </ul>
+            <div class="diagram-box">
+                <svg width="600" height="120" viewBox="0 0 600 120">
+                    <rect x="10" y="30" width="120" height="60" rx="8" fill="#1c1827" stroke="#a855f7" stroke-width="2"/>
+                    <text x="70" y="65" fill="#f8fafc" text-anchor="middle" font-size="12">Novice Prompt</text>
+                    <text x="70" y="80" fill="#94a3b8" text-anchor="middle" font-size="10">(Ask Only)</text>
+
+                    <path d="M 140 60 L 190 60" stroke="#cbd5e1" stroke-width="2"/>
+
+                    <rect x="200" y="10" width="380" height="100" rx="8" fill="#1c1827" stroke="#cbd5e1" stroke-width="2"/>
+                    <text x="390" y="35" fill="#c084fc" text-anchor="middle" font-weight="bold" font-size="13">Power User Briefing</text>
+                    <text x="390" y="60" fill="#f8fafc" text-anchor="middle" font-size="11">Files + Context + Constraints + Specific Ask</text>
+                    <text x="390" y="85" fill="#34d399" text-anchor="middle" font-size="10">Zero assumptions, strict schemas, verifiable outputs</text>
+                </svg>
+            </div>
+        `
+    },
+    {
+        id: 2,
+        title: "Pretrained Knowledge Limits & Data Density",
+        preview: "Understanding pretraining cutoffs, data density, and hallucination bounds.",
+        content: `
+            <p><strong>Core Concept:</strong> Model reliability is directly proportional to the density of specific information present in its internet training corpus.</p>
+            <table>
+                <tr><th>Zone</th><th>Data Density</th><th>Reliability</th><th>Model Action</th></tr>
+                <tr><td>Loud Zone</td><td>High</td><td>High</td><td>Accurate direct generation (standard algorithms, broad facts)</td></tr>
+                <tr><td>Quiet Zone</td><td>Low</td><td>Medium/Low</td><td>Synthesizes plausible patterns; prone to silent errors</td></tr>
+                <tr><td>Secret Zone</td><td>Zero</td><td>Zero</td><td>Hallucinates facts (private enterprise data, post-cutoff events)</td></tr>
+            </table>
+            <p><em>Key takeaway:</em> Model linguistic confidence is an output trait, not a reflection of factual ground truth.</p>
+        `
+    },
+    {
+        id: 3,
+        title: "The 3 Retrieval Modes",
+        preview: "Pretrained, Web Search, and Deep Research execution mechanics.",
+        content: `
+            <p>Modern platforms dynamically select between three discrete execution pipelines:</p>
+            <ol>
+                <li><strong>Pretrained Mode:</strong> Sub-second response generated entirely from static weights.</li>
+                <li><strong>Web Search Mode:</strong> Fetches external web pages via an intermediate scraper/summarizer model to insert snippets into the active context window.</li>
+                <li><strong>Deep Research Mode:</strong> Autonomous multi-step loop running recursive web searches over minutes to construct structured synthesis reports.</li>
+            </ol>
+            <p><strong>Summary Drift Mitigation:</strong> Scraper models condense full pages into snippets, causing loss of fine details. Request explicit, direct verbatim citations in your prompt to bypass summary drift.</p>
+        `
+    },
+    {
+        id: 4,
+        title: "Context Stack & Context Rot",
+        preview: "The 6-layer context window and managing long-chat degradation.",
+        content: `
+            <p>The context window represents the total token buffer processed during inference. It is structured into a 6-layer stack:</p>
+            <ol>
+                <li><strong>System Prompt (Layer 1):</strong> Core platform house rules set by vendor.</li>
+                <li><strong>Personal Context / Memory (Layer 2):</strong> Persistent profile traits injected across chats.</li>
+                <li><strong>Tool Descriptions (Layer 3):</strong> API specs for search, code execution, and sandboxes.</li>
+                <li><strong>User Prompt (Layer 4):</strong> Active input written for the current turn.</li>
+                <li><strong>Chat History (Layer 5):</strong> Prior conversational turns in the active thread.</li>
+                <li><strong>Uploaded Files (Layer 6):</strong> Codebases, spreadsheets, or attached PDFs.</li>
+            </ol>
+            <p><strong>Context Rot & Compacting:</strong> As conversations grow, systems silently summarize earlier turns. This compacting drops exact rules, leading to erratic behavior. The resolution is initiating clean sessions or leveraging persistent Projects/Notebooks.</p>
+        `
+    },
+    {
+        id: 5,
+        title: "Reasoning & Extended Thinking",
+        preview: "Test-time compute scaling and internal chain-of-thought loops.",
+        content: `
+            <p><strong>Core Concept:</strong> Modern architecture leverages test-time compute loops. Before generating visible output tokens, models allocate scratchpad tokens to test logic paths and verify solutions.</p>
+            <p><strong>METR Task-Length Trajectory:</strong> Task completion capacity doubles approximately every 7 months, expanding reliable autonomous task durations from ~7 minutes (2024) to over an hour (2026).</p>
+            <pre><code>Trigger Directive: "Read all attachments. Think hard. Evaluate all trade-offs before outputting recommendations."</code></pre>
+        `
+    },
+    {
+        id: 6,
+        title: "Neutralizing Sycophancy",
+        preview: "Countering alignment bias with neutral prompts & scored rubrics.",
+        content: `
+            <p><strong>Sycophancy:</strong> Reinforcement Learning from Human Feedback (RLHF) causes models to favor user agreement over objective truth. Systems open with validation far more frequently than critical challenge.</p>
+            <p><strong>Neutralization Protocols:</strong></p>
+            <ul>
+                <li>Remove leading bias: Replace <em>"Find evidence why X works"</em> with <em>"Evaluate X. List strongest arguments for and against."</em></li>
+                <li>Enforce Scored Rubrics: Require 1-10 numerical grading across explicit named criteria.</li>
+                <li>Next-Level Constraint: Force the model to explain how to improve a 9 to 9.5, forcing critical evaluation regardless of initial performance.</li>
+            </ul>
+        `
+    },
+    {
+        id: 7,
+        title: "Brainstorm-Iterate Loop",
+        preview: "Structural option generation and the 4 request archetypes.",
+        content: `
+            <p>Executing high-value outputs relies on progressive iteration rather than direct prose generation:</p>
+            <ol>
+                <li>Load Context -> 2. Generate 3-5 Options -> 3. Provide Specific Rejections/Approvals -> 4. Regenerate -> 5. Expand Chosen Option -> 6. Refine until score plateaus.</li>
+            </ol>
+            <table>
+                <tr><th>Kind of Ask</th><th>Goal</th><th>Tighten</th><th>Loosen</th></tr>
+                <tr><td>Brainstorming</td><td>Diverse Options</td><td>Problem & Constraints</td><td>Format, Schema, Length</td></tr>
+                <tr><td>Research</td><td>Mapping Ground</td><td>Scope & Sources</td><td>Preconceived Conclusions</td></tr>
+                <tr><td>Drafting</td><td>Execution</td><td>Voice, Style, Schema</td><td>Scope variability</td></tr>
+                <tr><td>Analysis</td><td>Objective Truth</td><td>Data & Criteria</td><td>Personal bias</td></tr>
+            </table>
+        `
+    },
+    {
+        id: 8,
+        title: "Multimodal Processing & SVG Workflow",
+        preview: "Vision, audio, image generation mechanics, and multi-tool pipelines.",
+        content: `
+            <p><strong>Multimodal Mechanics:</strong> Vision models excel at structural interpretation (whiteboard spatial flow, text layouts) but struggle with fine detail processing or dense visual counting. Diffusion models generate whole-canvas noise reduction simultaneously across discrete steps.</p>
+            <p><strong>Architectural Pipeline for Technical Diagrams:</strong></p>
+            <ol>
+                <li>Ask a text reasoning model to generate structural vector code as <code>SVG</code>.</li>
+                <li>Render/Export SVG to a high-resolution PNG image.</li>
+                <li>Feed PNG into a specialized visual model with instructions to apply design styling while preserving structural layout geometry.</li>
+            </ol>
+        `
+    },
+    {
+        id: 9,
+        title: "One-Prompt Artifacts & Web Apps",
+        preview: "Building interactive tools directly within side-panel sandboxes.",
+        content: `
+            <p>Single-prompt web app generation leverages chat sandboxes (Claude Artifacts, ChatGPT/Gemini Canvas) to compile standalone client-side code (HTML/JS/CSS).</p>
+            <p><strong>The 3-Slot Specification Pattern:</strong></p>
+            <pre><code>Goal: [What system does]
+Input: [User interactions/controls]
+Output: [Visual feedback/UI state]</code></pre>
+            <p><em>Boundaries:</em> Single-screen client apps excel (calculators, local games, interactive charts). Backend authentication or external database persistence exceed single-prompt sandboxes.</p>
+        `
+    },
+    {
+        id: 10,
+        title: "Code Execution & Data Analysis",
+        preview: "Preventing hallucinated math by enforcing program execution.",
+        content: `
+            <p>When models calculate statistics directly via language generation, they estimate token probabilities rather than execute arithmetic. This leads to plausible but false numerical results.</p>
+            <p><strong>Code Execution Tooling:</strong> Modern systems spin up ephemeral Python sandboxes to run exact calculations on structured files (CSV, JSON).</p>
+            <p><strong>Verification Protocol:</strong> Force execution by requiring explicit code block outputs and verifying baseline data traits (e.g., exact row count and column headers) prior to analysis.</p>
+        `
+    },
+    {
+        id: 11,
+        title: "Desktop AI & Permission Security",
+        preview: "Autonomous local filesystem actions and risk management.",
+        content: `
+            <p>Desktop agents possess host execution privileges to manipulate directory structures, reformat files, and run terminal scripts.</p>
+            <p><strong>Critical Security Risks:</strong></p>
+            <ul>
+                <li><strong>Destructive Operations:</strong> Files deleted by AI agents often bypass the operating system's Recycle Bin/Trash, resulting in permanent data loss.</li>
+                <li><strong>Overwrite Hazard:</strong> Direct file writes eliminate previous revision histories unless under active version control (e.g., Git).</li>
+            </ul>
+            <p><strong>Safe Execution Protocol:</strong> Mandate a dry-run plan step (e.g., "Propose tree structure changes") prior to granting file execution approval.</p>
+        `
+    },
+    {
+        id: 12,
+        title: "Model Ladder, Arena & Jagged Frontier",
+        preview: "Model performance tiers, economic trade-offs, and leaderboards.",
+        content: `
+            <p><strong>The Model Ladder:</strong> Ecosystems segment models into performance/cost tiers (Fast/Flash vs. Flagship vs. Extended Reasoning).</p>
+            <p><strong>Cost & Latency Hierarchy:</strong></p>
+            <pre><code>Text (Fastest / Fractions of a cent) 
+  → Audio (Seconds / Cents per min) 
+  → Image (Tens of sec / Cents per image) 
+  → Video / Deep Research (Minutes / Dollars)</code></pre>
+            <p><strong>The Jagged Frontier:</strong> Capabilities are highly uneven across providers. Use public crowdsourced double-blind testing leaderboards (such as <strong>LMSYS Arena</strong>) to track domain-specific model performance.</p>
+        `
+    },
+    {
+        id: 13,
+        title: "Cross-Model Consensus Verification",
+        preview: "Multi-family critique loops for high-stakes verification.",
+        content: `
+            <p><strong>Core Concept:</strong> To validate outputs in the absence of ground truth or human domain experts, leverage multi-family cross-model reviews.</p>
+            <p><strong>Model Family Distinction:</strong> Verification requires switching across independent underlying architecture families (e.g., Anthropic Claude vs. OpenAI GPT vs. Google Gemini vs. Meta AI vs. DeepSeek). Intra-family checks (e.g., Claude 3.5 Sonnet reviewing Claude 3.5 Haiku) share systemic training blind spots.</p>
+            <ol>
+                <li>Draft in Family A -> 2. Self-grade via Rubric -> 3. Pass to Family B with identical Rubric -> 4. Feed Family B's critiques back to Family A for final integration.</li>
+            </ol>
+        `
+    }
+];
+
+// --- 30 ADVANCED TECHNICAL QUIZ QUESTIONS ---
+const quizQuestions = [
+    {
+        id: 1,
+        question: "According to 2026 architectural fundamentals, what does it mean that an LLM is inherently 'stateless'?",
+        options: [
+            "It cannot execute web searches or run external Python code sandboxes.",
+            "It retains no native memory of prior turns and constructs every answer solely from tokens in its immediate context window.",
+            "It processes image and audio inputs using separate non-neural hardware layers.",
+            "Its underlying training weights undergo real-time updates after every user interaction."
+        ],
+        answer: 1,
+        explanation: "Statelessness dictates that the model holds no personal memory between turns. Every response is constructed exclusively from the active context stack present at inference time."
+    },
+    {
+        id: 2,
+        question: "Which of the following represents the 4 core components required in a power-user briefing prompt?",
+        options: [
+            "Greeting, System Prompt, Code Block, System Persona",
+            "Files/Context, Goal, Constraints/Limits, Exact Ask",
+            "Temperature Setting, Top-P, Token Count, Model Name",
+            "Search Query, Summary, Citation Link, Rejection Criteria"
+        ],
+        answer: 1,
+        explanation: "A complete power-user briefing supplies Files/Context, Goal, Constraints, and the Exact Ask, mimicking an exhaustive briefing to a skilled peer."
+    },
+    {
+        id: 3,
+        question: "What is 'slop' in the context of AI-generated content?",
+        options: [
+            "Unparseable JSON output produced during structured API calls.",
+            "Text that is surface-level fluent and grammatically clean but content-empty and lacking specific constraints.",
+            "A memory-leak error occurring inside long-running agent loops.",
+            "Corrupted image generation artifacts resulting from high diffusion noise."
+        ],
+        answer: 1,
+        explanation: "'Slop' refers to generic, polished prose generated by models when given broad prompts devoid of rich context or specific constraints."
+    },
+    {
+        id: 4,
+        question: "How does topic density in pretraining data directly impact model output reliability?",
+        options: [
+            "Low-density topics cause immediate server timeout errors.",
+            "High-density topics trigger web searches automatically.",
+            "Model confidence drops to zero when topic density falls below 10%.",
+            "High density yields robust pretrained reasoning, whereas sparse density causes the model to generalize or hallucinate plausible details."
+        ],
+        answer: 3,
+        explanation: "LLMs generalize from pattern density. Well-represented topics (e.g., standard code) are highly reliable, while sparse topics force models to synthesize plausible but potentially incorrect answers."
+    },
+    {
+        id: 5,
+        question: "Why is model 'confidence' considered an unreliable indicator of factual accuracy?",
+        options: [
+            "LLMs predict token probabilities without an internal truth-gauge, matching linguistic confidence patterns found in training data regardless of factual validity.",
+            "Model confidence is artificially capped at 80% by safety filters.",
+            "Confidence levels are randomly assigned by the user interface UI layer.",
+            "High confidence only occurs when web search tools are actively disabled."
+        ],
+        answer: 0,
+        explanation: "LLMs generate linguistically smooth and confident text based on training patterns, even when underlying data density is low or erroneous."
+    },
+    {
+        id: 6,
+        question: "What failure mechanism occurs during Web Search Mode known as 'summary drift'?",
+        options: [
+            "The web browser scraper crashes due to JavaScript execution blocks.",
+            "An intermediate retrieval model condenses web page passages into shortened summaries, causing loss of critical sub-details before reaching the main chat model.",
+            "The search engine returns results published after the current calendar year.",
+            "The model overwrites the user's custom system instructions with meta tags."
+        ],
+        answer: 1,
+        explanation: "Summary drift occurs when smaller web-scraping summarizers cut out essential nuances from raw pages before sending condensed context to the primary LLM."
+    },
+    {
+        id: 7,
+        question: "Which prompting technique effectively counters 'summary drift' during search-retrieval execution?",
+        options: [
+            "Demanding direct verbatim quotes from source pages for each generated claim.",
+            "Increasing the model's temperature parameter to 1.5.",
+            "Switching from desktop apps to mobile web interfaces.",
+            "Restricting prompts to single-word search queries."
+        ],
+        answer: 0,
+        explanation: "Requiring exact quoted sentences forces the retrieval pipeline to pull literal text passages into context, eliminating summarization errors."
+    },
+    {
+        id: 8,
+        question: "In the 6-layer Context Stack, which layer represents foundational operational constraints set by the vendor before user interaction?",
+        options: [
+            "Layer 4: User Prompt",
+            "Layer 1: System Prompt",
+            "Layer 5: Chat History",
+            "Layer 2: Stored Memory"
+        ],
+        answer: 1,
+        explanation: "Layer 1 is the system prompt configured by the system developer, setting core behavior, security boundaries, and tool availability."
+    },
+    {
+        id: 9,
+        question: "What is the mechanical cause of 'Context Rot' in long conversational sessions?",
+        options: [
+            "Physical degradation of server hardware during high-load processing.",
+            "Accumulation of unrelated topics filling context space and silent context 'compacting', which summarizes early turns and drops precise rules.",
+            "Exceeding the maximum allowed web search queries per hour.",
+            "Automatic deletion of account preferences by privacy daemon services."
+        ],
+        answer: 1,
+        explanation: "Context rot occurs as long chats accumulate clutter, prompting the system to summarize (compact) past history and drop explicit granular constraints."
+    },
+    {
+        id: 10,
+        question: "How does product-level 'Memory' function without violating the fundamental statelessness of LLM architectures?",
+        options: [
+            "It permanently rewires neural weights inside the underlying transformer layer.",
+            "It operates as an external database note maintained by the tool interface, which is silently injected into the context stack (Layer 2) before each new chat.",
+            "It uploads user data to open-source public search indexes.",
+            "It runs continuous local background code execution scripts."
+        ],
+        answer: 1,
+        explanation: "Memory is managed outside the model by the application platform. It stores key user traits and prepends them into the context window as a structured note for every new chat."
+    },
+    {
+        id: 11,
+        question: "What major shift occurred in reasoning models between 2023 and 2026, replacing simple 'think step by step' prompting?",
+        options: [
+            "Integration of dedicated test-time compute loops where models generate internal reasoning tokens before outputting final answers.",
+            "Complete elimination of text output in favor of binary code execution.",
+            "Deprecation of multi-turn chatting in favor of single-turn API payloads.",
+            "Mandatory human review of all intermediate model responses."
+        ],
+        answer: 0,
+        explanation: "Modern reasoning architectures allocate test-time compute to generate unseen scratchpad tokens, testing multiple paths and checking logic prior to generating the visible answer."
+    },
+    {
+        id: 12,
+        question: "According to METR empirical evaluations, how rapidly did reliable autonomous AI task completion duration scale between 2024 and 2026?",
+        options: [
+            "It remained static at approximately 3 minutes.",
+            "It doubled roughly every 7 months, expanding from ~7-minute tasks to over 1-hour complex tasks.",
+            "It scaled by 10,000x every 30 days.",
+            "It decreased due to stricter vendor safety parameters."
+        ],
+        answer: 1,
+        explanation: "METR research demonstrated that the duration of tasks an AI can reliably complete without human intervention doubled roughly every 7 months."
+    },
+    {
+        id: 13,
+        question: "What structural cause accounts for model 'Sycophancy' in conversational AI systems?",
+        options: [
+            "Hardware latency spikes during token generation.",
+            "Reinforcement Learning from Human Feedback (RLHF) rewarding outputs that agree with user framing and assumptions.",
+            "Under-sampling of web pages during deep research loops.",
+            "Using low-precision quantization on local models."
+        ],
+        answer: 1,
+        explanation: "RLHF fine-tuning heavily rewards polite agreement with human evaluators, leading models to instinctively validate user premises even when incorrect."
+    },
+    {
+        id: 14,
+        question: "Which prompt redesign strategy effectively neutralizes sycophancy when seeking feedback on a draft or project?",
+        options: [
+            "Asking 'Is this draft good enough to send?'",
+            "Praising the AI's capabilities before asking for review.",
+            "Supplying a clear rubric and requiring explicit 1-10 numerical scoring along with mandatory improvement paths for high scores.",
+            "Instructing the model to agree with your team lead's perspective."
+        ],
+        answer: 2,
+        explanation: "Enforcing an explicit numerical rubric forces the model out of generic pleasantries, requiring objective evaluation and concrete actionable feedback."
+    },
+    {
+        id: 15,
+        question: "In the Brainstorm-Iterate Loop, what sequence should precede requesting a full prose draft of an article or strategy document?",
+        options: [
+            "Direct prose generation -> Proofreading -> Code execution",
+            "Context loading -> Option generation -> Iterative feedback -> Outline definition -> Bullet expansion -> Draft generation",
+            "Web search -> Image generation -> Final publish",
+            "Deep research -> Instant final draft download"
+        ],
+        answer: 1,
+        explanation: "High-quality creation requires progressive structural lock-in (Context -> Options -> Feedback -> Outline -> Bullets -> Draft) before generating final prose."
+    },
+    {
+        id: 16,
+        question: "How should the tightness of prompt constraints vary between 'Brainstorming' and 'Execution/Drafting' phases?",
+        options: [
+            "Keep constraints fully locked during brainstorming and completely loose during execution.",
+            "Keep constraints loose on output shape during brainstorming to foster option diversity, but tightly pin constraints during execution.",
+            "Never apply constraints to technical execution tasks.",
+            "Use identical prompt framing for all tasks regardless of goals."
+        ],
+        answer: 1,
+        explanation: "Brainstorming requires loose output framing so the model can explore distinct options; execution demands tight structural limits to enforce precision."
+    },
+    {
+        id: 17,
+        question: "Which task is multimodal vision models technically well-suited for?",
+        options: [
+            "Accurately counting hundreds of small, overlapping items in a dense photo.",
+            "Extracting high-level structural layouts, diagrams, and handwriting from whiteboards.",
+            "Identifying tiny model details on identical industrial machinery from blurry photos.",
+            "Reading microscopic text obscured along far image boundaries."
+        ],
+        answer: 1,
+        explanation: "Vision models excel at structural interpretation (whiteboard spatial flow, text layouts) but struggle with fine detail processing or dense visual counting."
+    },
+    {
+        id: 18,
+        question: "Why cannot an image diffusion model generation pass be interrupted mid-way to save compute tokens in the manner of a text response?",
+        options: [
+            "Diffusion models run inside immutable browser hardware security modules.",
+            "Text is generated sequentially word-by-word, whereas diffusion generates the full canvas simultaneously through iterative noise reduction across the entire frame.",
+            "Diffusion models execute exclusively on client-side CPU cores.",
+            "Image outputs do not consume API operational credits."
+        ],
+        answer: 1,
+        explanation: "Diffusion processes transform an entire noisy canvas step-by-step into a crisp image simultaneously, unlike token-by-token sequential text rendering."
+    },
+    {
+        id: 19,
+        question: "What is the recommended multi-tool workflow for producing publication-quality technical diagrams without design software?",
+        options: [
+            "Ask an image generator to draw code directly -> Copy text -> Save as PDF.",
+            "Generate structural vector code (SVG) via a text reasoning model -> Convert to PNG -> Polish visual styling in a visual image model -> Correct errors.",
+            "Hand-draw diagram on paper -> Scan -> Convert to ASCII text.",
+            "Use web search to scrape copyrighted diagram assets."
+        ],
+        answer: 1,
+        explanation: "This workflow leverages reasoning models for structural precision (SVG logic) and specialized vision-generation tools for visual design polish."
+    },
+    {
+        id: 20,
+        question: "What are the 3 structural slots required to formulate a single-prompt web application artifact?",
+        options: [
+            "System Prompt, API Key, SQL Database",
+            "Goal, Input, Output",
+            "HTML, CSS, JavaScript",
+            "Client, Server, Router"
+        ],
+        answer: 1,
+        explanation: "Defining Goal (purpose), Input (user controls), and Output (UI rendering) provides the minimal complete specification for generating single-screen artifact applications."
+    },
+    {
+        id: 21,
+        question: "What silent failure mode can occur when asking an LLM to analyze numerical data inside attached CSV files?",
+        options: [
+            "The model corrupts the local file system on the user's hard drive.",
+            "The model skips program execution, outputting probabilistic math estimates that sound plausible but are numerically false.",
+            "The model converts numerical digits into random non-English symbols.",
+            "The web browser forces an immediate hard reboot."
+        ],
+        answer: 1,
+        explanation: "Unless explicitly instructed to run code, LLMs may estimate math probabilistically via language generation rather than executing programmatic calculations."
+    },
+    {
+        id: 22,
+        question: "How can a user definitively verify that an LLM actually executed programmatic code on an attached spreadsheet rather than guessing?",
+        options: [
+            "By checking if the output contains polite conversational language.",
+            "By verifying the presence of an executable code block and requesting baseline deterministic dataset checks (e.g., exact row count and column headers) first.",
+            "By monitoring computer cooling fan speeds during response generation.",
+            "By ensuring the output response took less than 100 milliseconds."
+        ],
+        answer: 1,
+        explanation: "Checking for explicit executed code blocks and asking for verifiable structural traits (row count, exact headers) guarantees genuine program execution."
+    },
+    {
+        id: 23,
+        question: "What security risk exists when granting file-aware Desktop AI agents authorization to modify local file structures?",
+        options: [
+            "Deleted files often bypass system Recycle Bins/Trash, causing permanent loss, and modified files overwrite original data unless under version control.",
+            "Local file modification revokes the user's operating system user license.",
+            "Desktop agents automatically publish local hard drives to public search engines.",
+            "Files edited by AI agents can no longer be opened by text editors."
+        ],
+        answer: 0,
+        explanation: "Desktop AI operations bypass trash buffers and overwrite file contents directly. Without Git/version control or initial dry-runs, data loss can occur."
+    },
+    {
+        id: 24,
+        question: "What workflow step should always precede approving file execution actions when using Desktop AI tools?",
+        options: [
+            "Granting broad disk permissions unconditionally.",
+            "Demanding a dry-run operational plan (e.g., proposed folder tree) to inspect before authorizing actual file writes or moves.",
+            "Formatting the host computer's hard drive.",
+            "Disconnecting the computer from local power sources."
+        ],
+        answer: 1,
+        explanation: "Requesting a dry-run plan enables users to inspect proposed file system changes, catching errant file deletions or renames prior to execution."
+    },
+    {
+        id: 25,
+        question: "In terms of unit economics and compute costs, how do modal generation tasks generally rank from cheapest/fastest to most expensive/slowest?",
+        options: [
+            "Video -> Image -> Speech -> Text",
+            "Text -> Speech -> Image -> Video / Deep Research",
+            "Image -> Video -> Text -> Speech",
+            "Deep Research -> Speech -> Text -> Image"
+        ],
+        answer: 1,
+        explanation: "Text processing costs fractions of a cent per request; speech costs cents per minute; images require tens of seconds; video/deep research cost significantly more time and compute."
+    },
+    {
+        id: 26,
+        question: "What term describes the uneven distribution of AI model capabilities across different domains (e.g., strong in coding, weaker in spatial reasoning)?",
+        options: [
+            "Quantization Decay",
+            "The Jagged Frontier",
+            "Context Shrinking",
+            "Model Flattening"
+        ],
+        answer: 1,
+        explanation: "'The Jagged Frontier' describes how model capabilities vary unpredictably—leading in complex math while unexpectedly failing on simple edge cases."
+    },
+    {
+        id: 27,
+        question: "Why is LMSYS Arena considered a valuable benchmark for monitoring state-of-the-art model performance?",
+        options: [
+            "It measures the physical hardware temperature of data center GPUs.",
+            "It provides crowdsourced, double-blind human preference A/B testing leaderboards across domain-specific categories.",
+            "It tracks the daily stock price fluctuations of major AI vendors.",
+            "It automatically writes system prompts for corporate enterprises."
+        ],
+        answer: 1,
+        explanation: "LMSYS Arena uses double-blind human votes on randomized model outputs to generate unbiased Elo ratings across real-world operational domains."
+    },
+    {
+        id: 28,
+        question: "What requirement must be met for a cross-model evaluation loop to provide a valid, objective quality signal?",
+        options: [
+            "The reviewing model must belong to a completely distinct model family developed by a different organization.",
+            "The reviewing model must be an older version from the exact same vendor.",
+            "The reviewing model must have access to the user's credit card billing details.",
+            "Both models must run on local offline laptop hardware."
+        ],
+        answer: 0,
+        explanation: "True validation requires evaluating outputs across distinct architectural families (e.g., Claude vs GPT vs Gemini). Intra-family checks share underlying training biases."
+    },
+    {
+        id: 29,
+        question: "When conducting single-model iterative self-critique, what mechanism prevents the model from returning superficial praise?",
+        options: [
+            "Raising the API temperature setting to 2.0.",
+            "Forcing the model to evaluate against a strict numerical rubric with criteria-specific justification and mandatory paths to reach higher scores.",
+            "Repeatedly typing 'Are you sure?' in the chat window.",
+            "Disabling code execution tools entirely."
+        ],
+        answer: 1,
+        explanation: "Requiring numerical scoring across named rubric criteria forces the model to justify points deducted, converting flattery into actionable critique."
+    },
+    {
+        id: 30,
+        question: "What single core principle unifies virtually all advanced prompting techniques taught in the 2026 curriculum?",
+        options: [
+            "Always use formal, complex academic prose when writing prompts.",
+            "Get the right context in, or keep the wrong context out.",
+            "Never upload documents containing tabular data.",
+            "Execute all chat tasks in a single continuous conversation window."
+        ],
+        answer: 1,
+        explanation: "Because models are stateless context-processors, every advanced technique boils down to introducing essential context or filtering out irrelevant context."
+    }
+];
+
+// --- INITIALIZATION & DOM RENDERING ---
+
+document.addEventListener('DOMContentLoaded', () => {
+    renderCards();
+    renderQuiz();
+});
+
+// Render Concept Cards
+function renderCards() {
+    const container = document.getElementById('cards-container');
+    container.innerHTML = conceptsData.map(c => `
+        <div class="card" onclick="openModal(${c.id})">
+            <div>
+                <div class="card-number">CONCEPT ${c.id}</div>
+                <div class="card-title">${c.title}</div>
+                <div class="card-preview">${c.preview}</div>
+            </div>
+            <button class="card-btn">Read Briefing &rarr;</button>
+        </div>
+    `).join('');
+}
+
+// Modal Handlers
+function openModal(id) {
+    const concept = conceptsData.find(c => c.id === id);
+    if (!concept) return;
+
+    document.getElementById('modal-title').innerText = `Concept ${concept.id}: ${concept.title}`;
+    document.getElementById('modal-body').innerHTML = concept.content;
+    document.getElementById('modal-overlay').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal(event = null, force = false) {
+    if (force || (event && event.target.id === 'modal-overlay')) {
+        document.getElementById('modal-overlay').style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+}
+
+// Render Quiz Questions
+function renderQuiz() {
+    const container = document.getElementById('quiz-questions-container');
+    container.innerHTML = quizQuestions.map((q, idx) => `
+        <div class="quiz-question" id="question-box-${idx}">
+            <div class="q-title">${idx + 1}. ${q.question}</div>
+            <div class="q-options">
+                ${q.options.map((opt, optIdx) => `
+                    <label class="option-label">
+                        <input type="radio" name="question-${idx}" value="${optIdx}">
+                        <span>${opt}</span>
+                    </label>
+                `).join('')}
+            </div>
+        </div>
+    `).join('');
+}
+
+// Quiz Evaluation Logic
+function evaluateQuiz() {
+    let score = 0;
+    const keyContainer = document.getElementById('answer-key-container');
+    keyContainer.innerHTML = '<h3>Detailed Evaluation & Answer Key</h3>';
+
+    quizQuestions.forEach((q, idx) => {
+        const selected = document.querySelector(`input[name="question-${idx}"]:checked`);
+        const userChoice = selected ? parseInt(selected.value) : -1;
+        const isCorrect = userChoice === q.answer;
+
+        if (isCorrect) {
+            score++;
+        }
+
+        const userAnsText = userChoice !== -1 ? q.options[userChoice] : "None Selected";
+        const correctAnsText = q.options[q.answer];
+
+        const keyItem = document.createElement('div');
+        keyItem.className = `key-item ${isCorrect ? 'correct' : 'incorrect'}`;
+        keyItem.innerHTML = `
+            <div class="key-q">${idx + 1}. ${q.question}</div>
+            <div class="key-status ${isCorrect ? 'correct' : 'incorrect'}">
+                ${isCorrect ? '✓ Correct' : '✗ Incorrect'}
+            </div>
+            <div><strong>Your Answer:</strong> ${userAnsText}</div>
+            ${!isCorrect ? `<div><strong>Correct Answer:</strong> ${correctAnsText}</div>` : ''}
+            <div class="key-explanation"><strong>Technical Context:</strong> ${q.explanation}</div>
+        `;
+        keyContainer.appendChild(keyItem);
+    });
+
+    document.getElementById('score-display').innerText = `${score} / ${quizQuestions.length}`;
+    
+    const starBox = document.getElementById('star-box');
+    if (score >= 24) {
+        starBox.style.display = 'block';
+    } else {
+        starBox.style.display = 'none';
+    }
+
+    const resultsBox = document.getElementById('quiz-results');
+    resultsBox.style.display = 'block';
+    resultsBox.scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
